@@ -33,11 +33,13 @@ export default {
   background: pink;
   display: flex;
   padding: 16px;
-  position: relative;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
   z-index: 10;
   justify-content: center;
   align-items: center;
-
   > .logo {
     max-width: 6em;
     margin-right: auto;
@@ -50,7 +52,6 @@ export default {
       margin: 0 1em;
     }
   }
-
   > .toggle-aside {
     width: 24px;
     height: 24px;
@@ -61,7 +62,6 @@ export default {
     transform: translateY(-50%);
     display: none;
   }
-
   @media (max-width: 500px) {
     > .menu {
       display: none;
