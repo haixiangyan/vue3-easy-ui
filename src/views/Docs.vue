@@ -3,7 +3,7 @@
   <TopNav></TopNav>
 
   <div class="content">
-    <aside>
+    <aside v-if="menuVisible">
       <ol>
         <li>
           <router-link to="/doc/switch">Switch 组件</router-link>
@@ -24,13 +24,19 @@
 </div>
 </template>
 
-<script>
+<script lang="ts">
 import TopNav from '../components/TopNav.vue';
+import {inject, Ref} from "vue";
 
 export default {
   name: "Docs",
   components: {
     TopNav,
+  },
+  setup() {
+    const menuVisible = inject<Ref<boolean>>("xxx")
+
+    return { menuVisible }
   }
 }
 </script>
