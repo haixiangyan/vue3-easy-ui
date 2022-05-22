@@ -47,6 +47,9 @@
   <div>
     <Button disabled>Disabled</Button>
   </div>
+  <div>
+    <Button loading>加载中</Button>
+  </div>
 </template>
 
 <script lang="ts">
