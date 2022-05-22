@@ -3,10 +3,12 @@
     <div class="vue3-dialog-overlay" @click="onClickOverlay"></div>
     <div class="vue3-dialog-wrapper">
       <div class="vue3-dialog">
-        <header>标题 <span class="vue3-dialog-close" @click="close"></span></header>
+        <header>
+          <slot name="title"></slot>
+          <span class="vue3-dialog-close" @click="close"></span>
+        </header>
         <main>
-          <p>第一行字</p>
-          <p>第二行字</p>
+          <slot name="content"></slot>
         </main>
         <footer>
           <Button level="main" @click="ok">OK</Button>
