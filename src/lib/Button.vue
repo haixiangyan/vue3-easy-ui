@@ -1,20 +1,17 @@
 <template>
-  <div :size="size">
-    <button v-bind="rest">
-      <slot></slot>
-    </button>
-  </div>
+  <button class="button" :class="`theme-${theme}`">
+    <slot></slot>
+  </button>
 </template>
 
 <script lang="ts">
 export default {
   name: "Button",
-  // 不继承属性
-  inheritAttrs: false,
-  setup(props, context) {
-    const { size, ...rest } = context.attrs;
-
-    return { size, rest }
+  props: {
+    theme: {
+      type: String,
+      default: 'button'
+    }
   }
 }
 </script>
