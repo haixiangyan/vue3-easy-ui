@@ -1,5 +1,5 @@
 <template>
-  <button class="button" :class="`theme-${theme}`">
+  <button class="vue3-button" :class="`theme-${theme}`">
     <slot></slot>
   </button>
 </template>
@@ -16,13 +16,13 @@ export default {
 }
 </script>
 
-<style scoped lang="scss">
+<style lang="scss">
 $h: 32px;
 $border-color: #d9d9d9;
 $color: #333;
 $blue: #40a9ff;
 $radius: 4px;
-.button {
+.vue3-button {
   box-sizing: border-box;
   height: $h;
   padding: 0 12px;
