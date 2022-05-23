@@ -27,7 +27,7 @@
 
 <script lang="ts">
 import Tab from '../lib/Tab.vue';
-import {ref, watchEffect} from "vue";
+import {onMounted, ref, watchEffect} from "vue";
 
 export default {
   name: "Tabs",
@@ -42,23 +42,21 @@ export default {
     const container = ref<HTMLDivElement>(null);
 
     // 只在第一次渲染执行
-    watchEffect(() => {
-      if (!selectedItem.value || !indicator.value) {
-        return;
-      }
+    onMounted(() => {
+      watchEffect(() => {
+        const { width } = selectedItem.value.getBoundingClientRect();
 
-      const { width } = selectedItem.value.getBoundingClientRect();
+        indicator.value.style.width = width + 'px';
 
-      indicator.value.style.width = width + 'px';
+        // 容器 left
+        const { left: containerLeft } = container.value.getBoundingClientRect();
+        // 左边 nav 的 left
+        const { left: resultLeft } = selectedItem.value.getBoundingClientRect();
+        const left = resultLeft - containerLeft;
 
-      // 容器 left
-      const { left: containerLeft } = container.value.getBoundingClientRect();
-      // 左边 nav 的 left
-      const { left: resultLeft } = selectedItem.value.getBoundingClientRect();
-      const left = resultLeft - containerLeft;
-
-      indicator.value.style.left = left + 'px';
-    });
+        indicator.value.style.left = left + 'px';
+      });
+    })
 
     const defaults = context.slots.default();
     defaults.forEach(tag => {
