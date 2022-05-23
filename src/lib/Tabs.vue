@@ -1,7 +1,14 @@
 <template>
 <div class="vue3-tabs">
   <div class="vue3-tabs-nav">
-    <div class="vue3-tabs-nav-item" :class="{ selected: t === selected }" :key="t" v-for="t in titles">{{t}}</div>
+    <div
+      @click="select(t)"
+      class="vue3-tabs-nav-item"
+      :class="{ selected: t === selected }"
+      :key="t"
+      v-for="t in titles">
+      {{t}}
+    </div>
   </div>
   <div class="vue3-tabs-content">
     <component class="vue3-tabs-content-item" v-for="(c, index) in defaults" :is="c" :key="index" :class="{ selected: c.props.title === selected }" />
@@ -9,7 +16,7 @@
 </div>
 </template>
 
-<script>
+<script lang="ts">
 import Tab from '../lib/Tab.vue';
 
 export default {
@@ -36,7 +43,11 @@ export default {
       return tag.props.title;
     })
 
-    return { defaults, titles, current }
+    const select = (title: string) => {
+      context.emit('update:selected', title)
+    }
+
+    return { defaults, titles, current, select }
   }
 }
 </script>
