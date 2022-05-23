@@ -1,7 +1,11 @@
 <template>
-<div>
-  <div :key="t" v-for="t in titles">{{t}}</div>
-  <component v-for="(c, index) in defaults" :is="c" :key="index"></component>
+<div class="vue3-tabs">
+  <div class="vue3-tabs-nav">
+    <div class="vue3-tabs-nav-item" :key="t" v-for="t in titles">{{t}}</div>
+  </div>
+  <div class="vue3-tabs-content">
+    <component class="vue3-tabs-content-item" v-for="(c, index) in defaults" :is="c" :key="index"></component>
+  </div>
 </div>
 </template>
 
@@ -28,6 +32,34 @@ export default {
 }
 </script>
 
-<style scoped>
+<style lang="scss">
+$blue: #40a9ff;
+$color: #333;
+$border-color: #d9d9d9;
 
+.vue3-tabs {
+  &-nav {
+    display: flex;
+    color: $color;
+    border-bottom: 1px solid $border-color;
+
+    &-item {
+      padding: 8px 0;
+      margin: 0 16px;
+      cursor: pointer;
+
+      &:first-child {
+        margin-left: 0;
+      }
+
+      &.selected {
+        color: $blue;
+      }
+    }
+  }
+
+  &-content {
+    padding: 8px 0;
+  }
+}
 </style>
