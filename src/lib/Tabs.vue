@@ -5,9 +5,9 @@
       @click="select(t)"
       class="vue3-tabs-nav-item"
       :class="{ selected: t === selected }"
-      v-for="(t, index) in titles"
+      v-for="t in titles"
       :key="t"
-      :ref="el => { if (el) navItems[index] = el }"
+      :ref="el => { if (t === selected) selectedItem = el }"
     >
       {{t}}
     </div>
@@ -27,7 +27,7 @@
 
 <script lang="ts">
 import Tab from '../lib/Tab.vue';
-import {onMounted, onUpdated, ref} from "vue";
+import {ref, watchEffect} from "vue";
 
 export default {
   name: "Tabs",
@@ -37,45 +37,34 @@ export default {
     }
   },
   setup(props, context) {
-    const navItems = ref<HTMLDivElement[]>([]);
+    const selectedItem = ref<HTMLDivElement>(null);
     const indicator = ref<HTMLDivElement>(null);
     const container = ref<HTMLDivElement>(null);
 
-    const x = () => {
-      const divs = navItems.value;
-      const result = divs.find(div => div.classList.contains('selected'))
+    // 只在第一次渲染执行
+    watchEffect(() => {
+      if (!selectedItem.value || !indicator.value) {
+        return;
+      }
 
-      const { width } = result.getBoundingClientRect();
+      const { width } = selectedItem.value.getBoundingClientRect();
 
       indicator.value.style.width = width + 'px';
 
       // 容器 left
       const { left: containerLeft } = container.value.getBoundingClientRect();
       // 左边 nav 的 left
-      const { left: resultLeft } = result.getBoundingClientRect();
+      const { left: resultLeft } = selectedItem.value.getBoundingClientRect();
       const left = resultLeft - containerLeft;
 
       indicator.value.style.left = left + 'px';
-    }
-
-    // 只在第一次渲染执行
-    onMounted(() => {
-      x();
     });
-
-    onUpdated(() => {
-      x();
-    })
 
     const defaults = context.slots.default();
     defaults.forEach(tag => {
       if (tag.type !== Tab) {
         throw new Error('Tabs 子标签必须是 Tabs')
       }
-    })
-
-    const current = defaults.find(tag => {
-      return tag.props.title === props.selected
     })
 
     const titles = defaults.map(tag => {
@@ -86,7 +75,7 @@ export default {
       context.emit('update:selected', title)
     }
 
-    return { defaults, titles, current, select, navItems, indicator, container }
+    return { defaults, titles, select, indicator, container, selectedItem }
   }
 }
 </script>
