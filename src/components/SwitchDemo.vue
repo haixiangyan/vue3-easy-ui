@@ -12,9 +12,6 @@ import Demo from '../components/Demo.vue'
 import Switch1Demo from './Switch1.demo.vue'
 import Switch2Demo from './Switch2.demo.vue'
 
-import 'prismjs';
-import 'prismjs/themes/prism.css';
-
 import { ref } from 'vue'
 
 const Prism = (window as any).Prism;
