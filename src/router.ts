@@ -2,7 +2,6 @@ import {createRouter, createWebHashHistory} from "vue-router";
 
 import Home from './views/Home.vue';
 import Docs from './views/Docs.vue';
-import DocsDemo from './components/DocsDemo.vue';
 import SwitchDemo from './components/SwitchDemo.vue';
 import ButtonDemo from './components/ButtonDemo.vue';
 import DialogDemo from './components/DialogDemo.vue';
@@ -23,7 +22,7 @@ const router = createRouter({
       path: '/docs',
       component: Docs,
       children: [
-        { path: '', component: DocsDemo },
+        { path: '', redirect: '/docs/intro' },
         { path: 'intro', component: markdown('intro') },
         { path: 'get-started', component: markdown('get-started') },
         { path: 'install', component: markdown('install') },
