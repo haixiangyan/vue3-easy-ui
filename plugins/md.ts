@@ -1,7 +1,7 @@
 // @ts-nocheck
 import path from 'path'
 import fs from 'fs'
-import { marked } from 'marked'
+import marked from 'marked'
 
 
 
